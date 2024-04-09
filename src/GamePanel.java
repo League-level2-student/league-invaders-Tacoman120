@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     Font startFont = new Font("Arial", Font.PLAIN, 20);
     Font instructionFont = new Font("Arial", Font.PLAIN, 20);
     Timer frameDraw;
+    Rocketship rocket = new Rocketship(250, 700, 50 ,50);
     
 @Override
 public void paintComponent(Graphics g){
@@ -53,7 +54,9 @@ public void paintComponent(Graphics g){
    g.drawString("press SPACE for instructions", 125, 600);}
    
    void drawGameState(Graphics g) { g.setColor(Color.BLACK);
-   g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT); }
+   g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT); 
+   rocket.draw(g);
+   }
    
    void drawEndState(Graphics g)  { g.setColor(Color.RED);
    g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT); 
@@ -94,13 +97,25 @@ public void keyPressed(KeyEvent e) {
 	   
 	}   
 	if (e.getKeyCode()==KeyEvent.VK_UP) {
-        System.out.println("UP");
+        //System.out.println("UP");
+        if(rocket.y >= 0) {
+        rocket.up();
+        }
     }else if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-        System.out.println("DOWN");
+        //System.out.println("DOWN");
+        if(rocket.y <= 710) {
+            rocket.down();
+            }
     }else if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-        System.out.println("LEFT");
+        //System.out.println("LEFT");
+        if(rocket.x >= 0) {
+            rocket.left();
+            }
     }else if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-        System.out.println("RIGHT");
+        //System.out.println("RIGHT");
+        if(rocket.x <= 450) {
+            rocket.right();
+            }
     }
 }
 @Override
