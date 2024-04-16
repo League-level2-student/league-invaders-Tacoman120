@@ -18,6 +18,6 @@ public class GameObject {
 	 }
 	 
 	void update(){
-		 collisionBox = new Rectangle(x,y,width,height);
+		collisionBox.setBounds(x, y, width, height);
 	 }
 }

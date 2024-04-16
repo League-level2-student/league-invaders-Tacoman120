@@ -22,19 +22,23 @@ public class Rocketship extends GameObject {
 	}
 	
 	public void right() {
-        x+=speed;
+        super.x+=speed;
+        super.update();
     }
 	
 	public void left() {
-        x-=speed;
+        super.x-=speed;
+        super.update();
     }
 	
 	public void up() {
-        y-=speed;
+        super.y-=speed;
+        super.update();
     }
 	
 	public void down() {
-        y+=speed;
+        super.y+=speed;
+        super.update();
     }
 	
 	void draw(Graphics g) {

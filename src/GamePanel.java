@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -21,6 +22,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     Font titleFont = new Font("Arial", Font.PLAIN, 48);
     Font startFont = new Font("Arial", Font.PLAIN, 20);
     Font instructionFont = new Font("Arial", Font.PLAIN, 20);
+    Font scoreFont = new Font("Arial", Font.PLAIN, 15);
     Timer frameDraw;
     Rocketship rocket = new Rocketship(250, 700, 50 ,50);
     ObjectManager manager = new ObjectManager(rocket);
@@ -55,6 +57,9 @@ public void paintComponent(Graphics g){
   
    void updateGameState() { 
 	   manager.update();
+	   if(rocket.isActive == false) {
+		   currentState = END;
+	   }
    }
    
    void updateEndState()  {  }
@@ -78,7 +83,9 @@ public void paintComponent(Graphics g){
 			   g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT); 
 		}
 	   
-   
+   g.setColor(Color.WHITE);
+   g.setFont(scoreFont);
+   g.drawString("Score: "+manager.getScore(), 50, 650);
    manager.draw(g);
    }
    
@@ -88,7 +95,7 @@ public void paintComponent(Graphics g){
    g.setColor(Color.YELLOW);
    g.drawString("GAME OVER", 100, 100);
    g.setFont(startFont);
-   g.drawString("You Killed "+" Enemies", 150, 450);
+   g.drawString("You Killed "+manager.getScore()+" Enemies", 150, 450);
    g.setFont(instructionFont);
    g.drawString("press ENTER To Restart", 125, 600);}
    
@@ -114,6 +121,8 @@ public void keyPressed(KeyEvent e) {
 	// TODO Auto-generated method stub
 	if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 	    if (currentState == END) {
+	    	rocket = new Rocketship(250, 700, 50 ,50);
+	    	manager = new ObjectManager(rocket);
 	        currentState = MENU;
 	    } else if(currentState == MENU) {
 	    	currentState++;
@@ -128,6 +137,8 @@ public void keyPressed(KeyEvent e) {
 	if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 		if(currentState == GAME) {
 			manager.addProjectile(rocket.getProjectile());
+		} else if(currentState == MENU) {
+			JOptionPane.showMessageDialog(null, "Use Arrow Keys for movement and SPACE to shoot the enemies\nTry not to get hit by aliens");
 		}
 	}
 	if (e.getKeyCode()==KeyEvent.VK_UP) {
